@@ -1,15 +1,13 @@
 import argparse
 import cv2
-import urllib2
-#import requests
+import urllib.request
 import numpy as np
 from datetime import datetime
 import os
 
-
 # Example: python save_streaming_video_data.py --ip 192.168.1.82
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--ip", required=True, help="Raspberry Pi IP address")
+ap.add_argument("-i", "--ip", required=True, help="Raspberry Pi hostname or IP")
 args = vars(ap.parse_args())
 ip = args["ip"]
 
@@ -18,10 +16,9 @@ ip = args["ip"]
 # sudo ffserver -f /etc/ff.conf_original & ffmpeg -v quiet -r 5 -s 320x240 -f video4linux2 -i /dev/video0 http://localhost/webcam.ffm
 
 fourcc = cv2.VideoWriter_fourcc(*'jpeg')
-out = cv2.VideoWriter('output.mov',fourcc, 20.0, (320,240))
+out = cv2.VideoWriter('output.mov',fourcc, 20.0, (600,480))
 file_path = str(os.path.dirname(os.path.realpath(__file__)))+"/video_timestamps.txt"
-stream = urllib2.urlopen('http://{ip}/'.format(ip=ip))
-#stream = requests.get('http://{ip}/'.format(ip=ip))
+stream = urllib.request.urlopen('http://{ip}:8090/feed1.mjpeg'.format(ip=ip))
 
 bytes = bytes()
 while True:
@@ -35,9 +32,9 @@ while True:
         #cv2.imshow('Car Camera', frame)
         now = datetime.now()
         print(now)
-        if frame is not None:   
+        if frame is not None:
           cv2.imshow("car camera", frame)
-          
+
           # Use the code below if I need find the dimensions of the video
           '''
           height, width, channels = frame.shape
