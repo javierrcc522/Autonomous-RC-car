@@ -17,7 +17,7 @@ _I'm building an RC autonomous car. The goal of this project is (simple, not eas
 * _Log into Rpi $ ssh pi@192.168.1.141_
 * _Activate gpu Cam pi $ sudo modprobe bcm2835-v4l2_
 * _Cd into /usr/src/FFmpeg $ ffserver -f /etc/ffserver.conf & ffmpeg -v verbose -r 5 -s 600x480 -f video4linux2 -i /dev/video0 http://localhost:8090/feed1.ffm_
-* _python save_streaming_video_data.py --ip 192.168.1.16 _
+* _run this on your mac $ python save_streaming_video_data.py --ip 192.168.1.16 _
 * _sudo python drive_api.py --speed_percent 100_
 * _Go to url http://192.168.1.141:81/drive
 * _Go to url after data collection http://192.168.1.141:81/StoreLogEntries_
